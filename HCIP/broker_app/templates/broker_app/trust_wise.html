@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrustWise Withdrawal - XYZ Bank</title>
+    <style type="text/css" media="all">
+        /* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+     background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    color: #333;
+     background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+}
+
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.navbar {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    margin-left: 20px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.navbar .nav-links {
+    display: flex;
+    list-style: none;
+    margin-right: 20px;
+}
+
+.navbar .nav-links li {
+    margin: 0 10px;
+}
+
+.navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: #f0f0f0;
+}
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.withdrawal-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group input[type="email"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+ .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #007bff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-link i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+        .nav-link span {
+            font-size: 0.75rem;
+        }
+        /* Animation for navbar links */
+@keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts - Roboto -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><i class="fas fa-university"></i> XYZ Bank</h1>
+            <ul class="nav-links">
+                <li><a href="{% url 'dash' %}">Home</a></li>
+                <li><a href="{% url 'setting' %}">Accounts</a></li>
+                <li><a href="{% url 'transaction' %}">Transactions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="trustwise-withdrawal">
+        <div class="container">
+            <h2 class="section-title">TrustWise Withdrawal Form</h2>
+            <div class="withdrawal-form">
+                <form method="post" id="trustwiseWithdrawalForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="trustwiseAccount">TrustWise Account Number</label>
+                        <input type="text" id="trustwiseAccount" name="trustwiseAccount" placeholder="Enter your TrustWise account number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="withdrawalAmount">Withdrawal Amount</label>
+                        {{ form.deposit_amount }}
+                    </div>
+                    {% for field in form.visible_fields %}
+                    {% for error in field.errors %}
+                    <div style="color: red;">{{ error }}</div>
+                   {% endfor %}
+               {% endfor %}
+                    <button type="submit" class="btn-submit">Withdraw Now</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <nav class="bottom-navbar">
+        <a href="{% url 'dash' %}" class="nav-link">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'setting' %}" class="nav-link">
+            <i class="fas fa-wallet"></i>
+            <span>Accounts</span>
+        </a>
+        <a href="{% url 'tf' %}" class="nav-link">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Transfer</span>
+        </a>
+        <a href="{% url 'statistics' %}" class="nav-link">
+            <i class="fas fa-chart-line"></i>
+            <span>Statistics</span>
+        </a>
+        <a href="{% url 'setting' %}" class="nav-link">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+    </div>
+
+    <!-- External JavaScript for form validation and functionality -->
+    <script type="text/javascript" charset="utf-8">
+//         // Example JavaScript for form validation
+
+// const trustwiseWithdrawalForm = document.getElementById('trustwiseWithdrawalForm');
+
+// trustwiseWithdrawalForm.addEventListener('submit', function(event) {
+//     event.preventDefault();
+
+//     // Perform form validation
+//     const trustwiseAccount = document.getElementById('trustwiseAccount').value;
+//     const withdrawalAmount = document.getElementById('withdrawalAmount').value;
+
+//     if (trustwiseAccount === '' || withdrawalAmount === '') {
+//         alert('Please fill in all fields');
+//     } else if (!validateAccountNumber(trustwiseAccount)) {
+//         alert('Please enter a valid TrustWise account number');
+//     } else {
+//         // Example: Submit form data to server or process withdrawal
+//         alert(`Withdrawal request submitted for $${withdrawalAmount} to TrustWise account ${trustwiseAccount}`);
+//         trustwiseWithdrawalForm.reset(); // Optional: Reset the form after submission
+//     }
+// });
+
+function validateAccountNumber(accountNumber) {
+    const re = /^[0-9]{8,12}$/;
+    return re.test(String(accountNumber));
+}
+
+    </script>
+</body>
+</html>

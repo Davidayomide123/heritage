@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Terminology - XYZ Bank</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #007bff;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            min-width: 150px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .dropdown li {
+            width: 100%;
+        }
+
+        .dropdown li a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav-toggle .bar {
+            height: 2px;
+            width: 25px;
+            background: white;
+            margin: 4px 0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background: #007bff;
+                padding: 10px 0;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                width: 100%;
+                padding: 15px 20px;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .container {
+                padding: 20px;
+                margin-top: 100px;
+                width: 90%;
+                max-width: 100%;
+            }
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            margin-top: 80px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        ul.terms-list {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        ul.terms-list li {
+            margin-bottom: 20px;
+        }
+
+        ul.terms-list li h2 {
+            font-size: 1.2rem;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+
+        ul.terms-list li p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">XYZ Bank</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Services</a>
+                    <ul class="dropdown">
+                        <li><a href="{% url 'home' %}">Personal Banking</a></li>
+                        <li><a href="{% url 'home' %}">Business Banking</a></li>
+                        <li><a href="{% url 'home' %}">Loans</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Terms and Terminology Content -->
+    <div class="container">
+        <header>
+            <h1>Terms and Terminology</h1>
+            <p>Understanding key terms related to banking and finance.</p>
+        </header>
+        <ul class="terms-list">
+            <li>
+                <h2>Interest Rate</h2>
+                <p>The percentage of a sum of money charged for its use, typically annually.</p>
+            </li>
+            <li>
+                <h2>Loan</h2>
+                <p>A sum of money that is borrowed and is expected to be paid back with interest.</p>
+            </li>
+            <li>
+                <h2>Credit Score</h2>
+                <p>A numerical representation of a person's creditworthiness, based on credit history.</p>
+            </li>
+            <li>
+                <h2>Mortgage</h2>
+                <p>A loan specifically for purchasing property, typically repaid over many years.</p>
+            </li>
+            <li>
+                <h2>Debit Card</h2>
+                <p>A card issued by a bank that allows the holder to transfer money electronically from their bank account when making a purchase.</p>
+            </li>
+            <li>
+                <h2>Deposit</h2>
+                <p>A sum of money placed or kept in a bank account, usually to gain interest.</p>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('.nav-menu');
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
+

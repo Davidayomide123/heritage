@@ -1,0 +1,728 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Landing Page</title>
+    <!-- Other head content -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts - Roboto -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic styling for the landing page */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbar {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #007bff;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.dropdown li {
+    width: 100%;
+}
+
+.dropdown li a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+/* Mobile menu toggle */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.nav-toggle .bar {
+    height: 2px;
+    width: 25px;
+    background: white;
+    margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: #007bff;
+        padding: 10px 0;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        width: 100%;
+        padding: 15px 20px;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+}
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .content-section {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .content-section h2 {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .content-section p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.25rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+        
+        
+        
+        .container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    margin-top: 80px; /* Adjusted for fixed navbar */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    animation: fadeIn 1s ease-in-out;
+    position: relative; /* Ensure relative positioning for absolute children */
+}
+
+.image-container {
+    position: relative; /* Ensure position context for absolute image */
+    overflow: hidden; /* Hide overflow to prevent image overflow */
+    margin-bottom: 20px; /* Adjust spacing between image and content */
+}
+
+.image-container img {
+    width: 100%; /* Ensure image fills its container */
+    max-width: 100%; /* Ensure image does not exceed its original size */
+    display: block; /* Remove extra space below image */
+    animation: slideInImage 1s ease-in-out; /* Optional animation for image */
+}
+
+/* Animation for container fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Optional animation for image */
+@keyframes slideInImage {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+.buttons .button {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 1rem;
+    color: white;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.buttons .button:hover {
+    background: #0056b3;
+    transform: scale(1.1);
+}
+
+/* Animation for container fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+       .services-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .service-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 300px;
+            padding: 20px;
+            text-align: left;
+            transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+            filter: invert(100%);
+        }
+
+        .service-card h2 {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .service-card h2 {
+                font-size: 1.25rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+               .form-group label {
+                font-size: 0.9rem;
+            }
+        }
+        
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .submit-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+  
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card {
+            animation: slideIn 1s ease-in-out;
+        }
+        
+        /* Footer Styles */
+.footer {
+    background: #007bff;;
+    color: navy;
+    padding: 80px 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 2rem;
+}
+
+.footer-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
+    color: navy;
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+.contact {
+    margin-top: 1rem;
+}
+
+.contact span {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.socials a {
+    margin-right: 10px;
+    color: navy;
+    font-size: 1.2rem;
+}
+
+.links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.links li {
+    margin-bottom: 1rem;
+}
+
+.links a {
+    color: navy;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.links a:hover {
+    color: #007bff;
+}
+
+.contact-form .text-input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    border: navy;
+    font-size: 0.9rem;
+}
+
+.contact-form textarea {
+    height: 120px;
+    resize: none;
+    border: navy;
+}
+
+.contact-form .btn {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.contact-form .btn:hover {
+    background: #0056b3;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    border-top: 1px solid #444;
+    padding-top: 1rem;
+}
+
+.terms a {
+    color: navy;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-right: 1rem;
+}
+
+.terms a:hover {
+    color: #007bff;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-section {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .terms {
+        margin-top: 1rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">XYZ Bank</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Personal Banking</a></li>
+                        <li><a href="#">Business Banking</a></li>
+                        <li><a href="#">Loans</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+    <br /><br />
+    <!-- Landing Page Content --><!-- Example: Adding an animated bank image -->
+<div class="container">
+    <header>
+        <h1>Welcome to XYZ Bank</h1>
+        <p>Your trusted financial partner.</p>
+    </header>
+    <img src="{% static 'images/name.png' %}" alt="Animated Bank Image" style="width: 100%; max-width: 500px;">
+    <div class="buttons">
+        <a href="{% url 'loginpage' %}" class="button">Login</a>
+        <a href="{% url 'register' %}" class="button">Register</a>
+    </div>
+</div>
+
+<br /><br /><br /><br />
+ <img src="{% static 'images/three.png' %}" alt="Animated Bank Image" style="width: 100%; max-width: 500px;">
+    
+    <!-- About Us Content -->
+    <div class="container" id="about">
+        <header>
+            <h1>About Us</h1>
+            <p>Learn more about XYZ Bank and our commitment to you.</p>
+        </header>
+        <div class="content-section">
+            <h2>Our Mission</h2>
+            <p>
+                At XYZ Bank, our mission is to provide top-quality financial services to our customers.
+                We are committed to fostering financial inclusion and helping our clients achieve their
+                financial goals with integrity and innovation.
+            </p>
+        </div>
+        <div class="content-section">
+            <h2>Our History</h2>
+            <p>
+                Established in 1990, XYZ Bank has grown from a small local bank to a leading financial
+                institution. Our journey has been one of resilience, adaptability, and a deep focus on
+                our customers’ needs. We continue to evolve and expand our services to meet the
+                changing landscape of the financial industry.
+            </p>
+        </div>
+        <div class="content-section">
+            <h2>Our Team</h2>
+            <p>
+                Our team comprises dedicated professionals with extensive experience in banking and
+                finance. We prioritize customer service and are here to assist you with any banking
+                needs, from personal finance to business solutions.
+            </p>
+        </div>
+        <div class="content-section">
+            <h2 >Contact Us</h2>
+            <p>
+                We would love to hear from you! Whether you have questions about our services or need
+                support, feel free to contact us at any time. Visit our <a href="#contact">Contact</a> page for more
+                information on how to get in touch.
+            </p>
+        </div>
+    </div>
+     <img src="{% static 'images/two.png' %}" alt="Animated Bank Image" style="width: 100%; max-width: 500px;">
+     <!-- Services Content -->
+    <div class="container" id="services">
+        <header>
+            <h1>Our Services</h1>
+            <p>Explore the wide range of services we offer to cater to your financial needs.</p>
+        </header>
+        <div class="services-list">
+            <div class="service-card">
+                <h2>Personal Banking</h2>
+                <p>Manage your finances with ease. Our personal banking services offer convenient solutions for your everyday banking needs.</p>
+            </div>
+            <div class="service-card">
+                <h2>Business Banking</h2>
+                <p>Grow your business with our range of banking services designed to support your business objectives and streamline your finances.</p>
+            </div>
+            <div class="service-card">
+                <h2>Loans</h2>
+                <p>Get access to flexible loan options to help you achieve your financial goals, whether for personal use, business expansion, or other needs.</p>
+            </div>
+        </div>
+    </div>
+    <img src="{% static 'images/one.png' %}" alt="Animated Bank Image" style="width: 100%; max-width: 500px;">
+     <!-- Contact Us Content -->
+    <div class="container" id="contact">
+        <header>
+            <h1>Contact Us</h1>
+            <p>We'd love to hear from you! Please fill out the form below to get in touch with us.</p>
+        </header>
+        <div class="content-section">
+            <form action="/submit_contact_form" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h2>About XYZ Bank</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lacinia felis a nunc blandit, eget interdum ex ultricies.</p>
+                <div class="contact">
+                    <span><i class="fas fa-phone"></i> +123 456 789</span>
+                    <span><i class="fas fa-envelope"></i> info@xyzbank.com</span>
+                </div>
+                <div class="socials">
+                    <a href="www.facebook.com"><i class="fab fa-facebook"></i></a>
+                    <a href="www.x.com"><i class="fab fa-twitter"></i></a>
+                    <a href="ww.intagram.com"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section links">
+                <h2>Quick Links</h2>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-form">
+                <h2>Contact Us</h2>
+                <form action="#">
+                    <input type="text" name="email" class="text-input contact-input" placeholder="Your email address...">
+                    <textarea name="message" class="text-input contact-input" placeholder="Your message..."></textarea>
+                    <button type="submit" class="btn btn-big contact-btn">
+                        <i class="fas fa-envelope"></i>
+                        Send
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 XYZ Bank. All rights reserved.</p>
+            <div class="terms">
+                <a href="{% url 'terms' %}">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Company Standards</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <script>
+        // Toggle mobile menu
+const mobileMenu = document.getElementById('mobile-menu');
+const navMenu = document.querySelector('.nav-menu');
+
+mobileMenu.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+});
+
+    </script>
+</body>
+</html>

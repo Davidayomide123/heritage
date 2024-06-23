@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Page - XYZ Bank</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts - Roboto -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles and color scheme */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .transfer-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .dropdown-navbar {
+            position: relative;
+            width: 100%;
+            background: #007bff;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .bank-name {
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .navbar-links {
+            display: none;
+            flex-direction: column;
+            background: #0056b3;
+            padding: 10px;
+            position: absolute;
+            width: 100%;
+            top: 100%;
+            left: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 0;
+            display: block;
+            text-align: left;
+            transition: background 0.3s;
+        }
+
+        .navbar-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Transfer form section */
+        .transfer-form {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #007bff;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #007bff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-link i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .nav-link span {
+            font-size: 0.75rem;
+        }
+
+        /* Animation for navbar links */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="transfer-page">
+        <!-- Drop-down Navigation Bar -->
+        <nav class="dropdown-navbar" id="dropdown-navbar">
+            <div class="navbar-header">
+                <button class="menu-btn" id="menu-btn">&#9776;</button>
+                <span class="bank-name">XYZ Bank</span>
+            </div>
+            <div class="navbar-links" id="navbar-links">
+                <a href="{% url 'dash' %}">Home</a>
+                <a href="{% url 'setting' %}">Accounts</a>
+                <a href="{% url 'transaction' %}">Transactions</a>
+                <a href="{% url 'payment' %}">Payments</a>
+                <a href="{% url 'setting' %}">Settings</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Transfer Funds</h1>
+            </header>
+
+            <section class="transfer-form">
+                <h2>Transfer Details</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="from-account">From Account</label>
+                        <select id="from-account" required>
+                            <option value="" disabled selected>Select account</option>
+                            <option value="1">Savings - 1234567890</option>
+                            <option value="2">Checking - 0987654321</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="to-account">To Account Number</label>
+                        <input type="text" id="to-account" placeholder="Enter recipient's account number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        {{ form.deposit_amount }}
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="3" placeholder="Enter description (optional)"></textarea>
+                    </div>
+                    {% for field in form.visible_fields %}
+                    {% for error in field.errors %}
+                    <div style="color: red;">{{ error }}</div>
+                   {% endfor %}
+               {% endfor %}
+                    <button type="submit" class="submit-btn">Transfer</button>
+                </form>
+            </section>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-navbar">
+            <a href="{% url 'dash' %}" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="{% url 'setting' %}" class="nav-link">
+                <i class="fas fa-wallet"></i>
+                <span>Accounts</span>
+            </a>
+            <a href="{% url 'tf' %}" class="nav-link">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Transfer</span>
+            </a>
+            <a href="{% url 'statistics' %}" class="nav-link">
+                <i class="fas fa-chart-line"></i>
+                <span>Statistics</span>
+            </a>
+            <a href="{% url 'setting' %}" class="nav-link">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuBtn = document.getElementById('menu-btn');
+            const navbarLinks = document.getElementById('navbar-links');
+            menuBtn.addEventListener('click', function() {
+                navbarLinks.style.display = navbarLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        });
+    </script>
+</body>
+
+</html>

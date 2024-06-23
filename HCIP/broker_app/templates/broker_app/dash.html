@@ -1,0 +1,656 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App Dashboard - XYZ Bank</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts - Roboto -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+    
+        /* Base styles and color scheme */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+             
+        }
+        .payment-options {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .option {
+            background-color: white;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .option img {
+            width: 50px;
+            height: 50px;
+        }
+        .option p {
+            margin: 10px 0 0;
+            font-size: 16px;
+        }
+        .option:hover {
+            transform: scale(1.1);
+            border-color: #007bff;
+        }
+        .option.selected {
+            border-color: #007bff;
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+        }
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .dropdown-navbar {
+            position: relative;
+            width: 100%;
+            background: #007bff;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+        .bank-name {
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 10px;
+        }
+        .navbar-links {
+            display: none;
+            flex-direction: column;
+            background: #0056b3;
+            padding: 10px;
+            position: absolute;
+            width: 100%;
+            top: 100%;
+            left: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        .navbar-links a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 0;
+            display: block;
+            text-align: left;
+            transition: background 0.3s;
+        }
+        .navbar-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .account-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .account-balance {
+            text-align: center;
+        }
+        .account-balance h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .account-balance p {
+            font-size: 2rem;
+            color: #333;
+        }
+        .transactions {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .transactions h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .transaction-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .transaction-description {
+            font-weight: bold;
+        }
+        .transaction-date {
+            color: #666;
+        }
+        .transaction-amount .amount {
+            font-weight: bold;
+            color: #333;
+        }
+        #stock-table-container {
+            margin-top: 20px;
+            background: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+        #stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: Arial, sans-serif;
+        }
+        #stock-table th, #stock-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        #stock-table th {
+            background: #007bff;
+            color: white;
+        }
+        #stock-data tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .bottom-navbar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #007bff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-link i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+        .nav-link span {
+            font-size: 0.75rem;
+        }
+        /* Animation for navbar links */
+@keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .payment-options {
+            display: flex;
+            gap: 20px;
+            height: 150px;
+            overflow-x: scroll;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .option {
+            flex-shrink: 0;
+            background-color: white;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .option img {
+            width: 50px;
+            height: 50px;
+        }
+        .option p {
+            margin: 10px 0 0;
+            font-size: 16px;
+        }
+        .option:hover {
+            transform: scale(1.1);
+            border-color: #007bff;
+        }
+        .option.selected {
+            border-color: #007bff;
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+        }
+        .payment-options::-webkit-scrollbar {
+            height: 8px;
+        }
+        .payment-options::-webkit-scrollbar-thumb {
+            background-color: #007bff;
+            border-radius: 4px;
+        }
+        .payment-options::-webkit-scrollbar-track {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+.chart-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+    animation: slideIn 2s ease-out, fadeIn 2s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.pie-chart {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    animation: rotate-chart 10s linear infinite;
+}
+
+@keyframes rotate-chart {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%);
+    transform-origin: 50% 50%;
+    cursor: pointer;
+}
+
+.slice::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--color);
+    clip-path: polygon(50% 50%, 100% 50%, 100% 0, 50% 0);
+    transform: rotate(calc(var(--percentage) * 3.6deg));
+}
+
+.slice:nth-child(1) {
+    transform: rotate(0deg);
+}
+
+.slice:nth-child(2) {
+    transform: rotate(calc(var(--percentage, 0) * 3.6deg));
+}
+
+.slice:nth-child(3) {
+    transform: rotate(calc((var(--percentage, 0) + 20) * 3.6deg));
+}
+
+.slice:nth-child(4) {
+    transform: rotate(calc((var(--percentage, 0) + 45) * 3.6deg));
+}
+
+.tooltip {
+    position: absolute;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.tooltip .info {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.tooltip .info strong {
+    display: block;
+}
+
+#thead{
+    color:  #007bff;
+}
+
+
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Drop-down Navigation Bar -->
+        <nav class="dropdown-navbar" id="dropdown-navbar">
+            <div class="navbar-header">
+                <button class="menu-btn" id="menu-btn">&#9776;</button>
+                <span class="bank-name">XYZ Bank</span>
+            </div>
+            <div class="navbar-links" id="navbar-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'setting' %}">Accounts</a>
+                <a href="{% url 'transaction' %}">Transactions</a>
+                <a href="{% url 'payment' %}">Payments</a>
+                <a href="{% url 'setting' %}">Settings</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Welcome, {{request.user}}</h1>
+            </header>
+            <section class="account-summary">
+                <div class="account-balance">
+                    <h2>Account Balance</h2>
+                    <p>
+                        ${{balance}}
+                    </p>
+                </div>
+            </section>
+    <header class="chart-header">Stock Market Overview</header>
+
+    <div class="pie-chart">
+        <div class="slice" 
+             data-info='{"company": "Company A", "sector": "Technology", "symbol": "AAPL", "price": "$150.00", "change": "+1.5%"}' 
+             style="--percentage: 30; --color: #4A90E2;"></div>
+        <div class="slice" 
+             data-info='{"company": "Company B", "sector": "Healthcare", "symbol": "PFE", "price": "$45.00", "change": "-0.8%"}' 
+             style="--percentage: 20; --color: #50E3C2;"></div>
+        <div class="slice" 
+             data-info='{"company": "Company C", "sector": "Finance", "symbol": "JPM", "price": "$160.00", "change": "+0.3%"}' 
+             style="--percentage: 25; --color: #9013FE;"></div>
+        <div class="slice" 
+             data-info='{"company": "Company D", "sector": "Energy", "symbol": "XOM", "price": "$100.00", "change": "+2.1%"}' 
+             style="--percentage: 25; --color: #F5A623;"></div>
+    </div>
+    <div id="tooltip" class="tooltip"></div>
+
+
+
+            <section class="transactions">
+                <h2>Recent Transactions</h2>
+                <ul class="transaction-list">
+                    <li class="transaction-item">
+                        <div class="transaction-details">
+                            <span class="transaction-description">Groceries</span>
+                            <span class="transaction-date">June 14, 2024</span>
+                        </div>
+                        <div class="transaction-amount">
+                            <span class="amount">$0.00</span>
+                        </div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-details">
+                            <span class="transaction-description">Salary</span>
+                            <span class="transaction-date">June 13, 2024</span>
+                        </div>
+                        <div class="transaction-amount">
+                            <span class="amount">$0.00</span>
+                        </div>
+                    </li>
+                    <li class="transaction-item">
+                        <div class="transaction-details">
+                            <span class="transaction-description">Rent</span>
+                            <span class="transaction-date">June 1, 2024</span>
+                        </div>
+                        <div class="transaction-amount">
+                            <span class="amount">$0.00</span>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <br />
+            <div class="payment-options">
+                 <h2 id="thead">Transfer options</h2>
+                <div class="option" id="visa" onclick="selectOption('visa')">
+                    <img src="{% static 'images/bank.jpeg' %}" alt="Visa">
+                    <p>
+                       <a style="text-decoration: none;color: black;" href="{% url 'bank' %}"> Bank transfer</a>
+                    </p>
+                </div>
+                <div class="option" id="mastercard" onclick="selectOption('mastercard')">
+                    <img src="{% static 'images/crypto.jpeg' %}" alt="Mastercard">
+                    <p>
+                        <a style="text-decoration: none;color: black;" href="{% url 'crypto' %}"> Crypto Pay</a>
+                    </p>
+                </div>
+                <div class="option" id="paypal" onclick="selectOption('paypal')">
+                    <img src="{% static 'images/paypal.jpeg' %}" alt="PayPal">
+                    <p>
+                        <a style="text-decoration: none;color: black;" href="{% url 'paypal' %}">Paypal</a>
+                    </p>
+                </div>
+                <div class="option" id="amex" onclick="selectOption('amex')">
+                    <img src="{% static 'images/skriller.png' %}" alt="American Express">
+                    <p>
+                        <a style="text-decoration: none;color: black;" href="{% url 'skrill' %}"> Skrill</a>
+                    </p>
+                </div>
+                 <div class="option" id="amex" onclick="selectOption('amex')">
+                    <img src="{% static 'images/trust_wise.png' %}" alt="American Express">
+                    <p>
+                        <a style="text-decoration: none;color: black;" href="{% url 'trust_wise' %}"> Trust wise</a>
+                    </p>
+                </div>
+                 <div class="option" id="amex" onclick="selectOption('amex')">
+                    <img src="{% static 'images/gp.png' %}" alt="American Express">
+                    <p>
+                        <a style="text-decoration: none;color: black;" href="{% url 'gp' %}">Google Pay</a>
+                    </p>
+                </div>
+                 <div class="option" id="amex" onclick="selectOption('amex')">
+                    <img src="{% static 'images/ws.png' %}" alt="American Express">
+                    <p>
+                        <a style="text-decoration: none;color: black;" href="{% url 'western_union' %}">Western Union</a>
+                    </p>
+                </div>
+                 <div class="option" id="amex" onclick="selectOption('amex')">
+                    <img src="{% static 'images/py.png' %}" alt="American Express">
+                    <p>
+                        <a style="text-decoration: none;color: black;" href="{% url 'payoneer' %}">Payoneer</a>
+                    </p>
+                </div>
+            </div>
+
+     <!-- Stock Market Table -->
+            <div id="stock-table-container">
+                <table id="stock-table">
+                    <thead>
+                        <tr>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                            <th>% Change</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stock-data">
+                        <!-- Dynamic stock data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-navbar">
+            <a href="{% url 'dash' %}" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="{% url 'tf' %}" class="nav-link">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Transfer</span>
+            </a>
+            <a href="{% url 'statistics' %}" class="nav-link">
+                <i class="fas fa-chart-line"></i>
+                <span>Statistics</span>
+            </a>
+            <a href="{% url 'setting' %}" class="nav-link">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuBtn = document.getElementById('menu-btn');
+            const navbarLinks = document.getElementById('navbar-links');
+
+            menuBtn.addEventListener('click', function() {
+                if (navbarLinks.style.display === 'flex') {
+                    navbarLinks.style.display = 'none';
+                } else {
+                    navbarLinks.style.display = 'flex';
+                }
+            });
+
+            // Fetch stock data
+            fetchStockData();
+
+            async function fetchStockData() {
+                const apiKey = 'tzXhhMCCc3BWuKgiE9nL0ZdHzdVJ9DcY'; // Replace with your API key
+                const apiUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    displayStockData(data);
+                } catch (error) {
+                    console.error('Error fetching stock data:',
+                        error);
+                }
+            }
+
+            function displayStockData(data) {
+                const stockTable = document.getElementById('stock-data');
+                const timeSeries = data['Time Series (5min)'];
+                const latestTime = Object.keys(timeSeries)[0];
+                const stockInfo = timeSeries[latestTime];
+
+                // Example of how to add a row to the table
+                const row = `
+                <tr>
+                <td>IBM</td>
+                <td>${stockInfo['1. open']}</td>
+                <td>${calculateChange(stockInfo['1. open'],
+                    stockInfo['4. close'])}</td>
+                <td>${calculatePercentageChange(stockInfo['1. open'],
+                    stockInfo['4. close'])}%</td>
+                </tr>
+                `;
+
+                stockTable.innerHTML = row;
+            }
+
+            function calculateChange(open, close) {
+                return (close - open).toFixed(2);
+            }
+
+            function calculatePercentageChange(open, close) {
+                return (((close - open) / open) * 100).toFixed(2);
+            }
+        });
+        // script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const slices = document.querySelectorAll('.slice');
+    const tooltip = document.getElementById('tooltip');
+
+    slices.forEach(slice => {
+        slice.addEventListener('mouseover', (event) => {
+            const data = JSON.parse(slice.getAttribute('data-info'));
+            tooltip.innerHTML = `
+                <div class="info"><strong>Company:</strong> ${data.company}</div>
+                <div class="info"><strong>Sector:</strong> ${data.sector}</div>
+                <div class="info"><strong>Symbol:</strong> ${data.symbol}</div>
+                <div class="info"><strong>Price:</strong> ${data.price}</div>
+                <div class="info"><strong>Change:</strong> ${data.change}</div>
+            `;
+            tooltip.style.opacity = 1;
+            tooltip.style.left = event.pageX + 'px';
+            tooltip.style.top = event.pageY + 'px';
+        });
+
+        slice.addEventListener('mousemove', (event) => {
+            tooltip.style.left = event.pageX + 'px';
+            tooltip.style.top = event.pageY + 'px';
+        });
+
+        slice.addEventListener('mouseout', () => {
+            tooltip.style.opacity = 0;
+        });
+    });
+});
+
+
+
+    </script>
+</body>
+</html>

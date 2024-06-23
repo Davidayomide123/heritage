@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - XYZ Bank</title>
+    <style>
+        /* Base styles and color scheme */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 200vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            animation: slideIn 1s ease-out;
+        }
+
+        .register-form {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .register-form h2 {
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .register-button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .register-button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .login-link {
+            margin-top: 20px;
+            color: #007bff;
+        }
+
+        .login-link a {
+            color: #0056b3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-link a:hover {
+            color: #003f8a;
+        }
+
+        /* Animation for register container */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+ .errors {
+  color: #dc3545; /* Error message color */
+  font-size: 16px;
+  font-weight: bold;
+  animation: shake 0.3s ease-in-out 0s 2; /* Animation parameters */
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px); /* Adjust shake distance */
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px); /* Adjust shake distance */
+  }
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="register-container">
+        <div class="register-form">
+            <h2>Create Your Account</h2>
+            <!-- Text about account type -->
+            <p>The account created is registered as a dollar account. If you have complaints, check our <a href="{% url 'terms' %}">terms and terminology.</a> </p>
+            
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    {{ form.username }}
+                </div>
+                
+                 <div class="input-group">
+                    <label for="username">First Name</label>
+                    {{ form.firstname }}
+                </div>
+
+                <div class="input-group">
+                    <label for="username">Last Name</label>
+                    {{ form.lastname }}
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    {{ form.email }}
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    {{ form.password1 }}
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Phone Number</label>
+                    {{ form.phonenumber }}
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Gender</label>
+                    {{ form.gender }}
+                </div>
+                
+                <!-- Account Type field -->
+                <div class="input-group">
+                    <label for="account_type">Account Type</label>
+                    {{ form.account_type }}
+                </div>
+
+                <div class="input-group">
+                    <label for="account_type">Working Type</label>
+                    {{ form.status }}
+                </div>
+
+                <button type="submit" class="register-button">Register</button>
+                <div class="errors">
+                {{ form.errors }}
+                </div>
+            </form>
+            
+            <p class="login-link">
+                Already have an account? <a href="{% url 'loginpage' %}">Login here</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
